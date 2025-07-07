@@ -19,3 +19,20 @@ Los endpoints principales son:
 - `GET /events` lista los eventos guardados en la base de datos.
 - `POST /events` crea un nuevo evento.
 - `GET /events/{id}/ical` descarga el evento en formato `.ics`.
+
+## Documentación Swagger
+
+Al arrancar la aplicación se genera automáticamente la documentación OpenAPI.
+Puedes consultarla en `http://localhost:8080/swagger-ui.html`.
+
+## Uso con Docker Compose
+
+Se incluye un archivo `docker-compose.yml` que levanta la aplicación junto con
+una base de datos PostgreSQL.
+
+```bash
+docker compose up --build
+```
+
+Esto compilará la aplicación y la expondrá en `http://localhost:8080` mientras
+que la base de datos estará disponible en el contenedor `db`.
