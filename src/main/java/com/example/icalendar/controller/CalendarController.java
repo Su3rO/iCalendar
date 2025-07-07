@@ -37,8 +37,8 @@ public class CalendarController {
     public ResponseEntity<CalendarEvent> create(
             @RequestParam String summary,
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
-        CalendarEvent event = service.addEvent(new CalendarEvent(null, summary, start, end));
+            @RequestParam("end") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime endTime) {
+        CalendarEvent event = service.addEvent(new CalendarEvent(null, summary, start, endTime));
         return ResponseEntity.created(URI.create("/events/" + event.getId())).body(event);
     }
 
@@ -52,7 +52,7 @@ public class CalendarController {
         VEvent vEvent = new VEvent();
         vEvent.getProperties().add(new Summary(event.getSummary()));
         vEvent.getProperties().add(new DtStart(event.getStart()));
-        vEvent.getProperties().add(new DtEnd(event.getEnd()));
+        vEvent.getProperties().add(new DtEnd(event.getEndTime()));
 
         Calendar calendar = new Calendar();
         calendar.getComponents().add(vEvent);

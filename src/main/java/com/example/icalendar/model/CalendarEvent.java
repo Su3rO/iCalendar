@@ -1,20 +1,29 @@
 package com.example.icalendar.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Column;
 import java.time.LocalDateTime;
 
+@Entity
 public class CalendarEvent {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String summary;
     private LocalDateTime start;
-    private LocalDateTime end;
+    @Column(name = "end_time")
+    private LocalDateTime endTime;
 
     public CalendarEvent() {}
 
-    public CalendarEvent(Long id, String summary, LocalDateTime start, LocalDateTime end) {
+    public CalendarEvent(Long id, String summary, LocalDateTime start, LocalDateTime endTime) {
         this.id = id;
         this.summary = summary;
         this.start = start;
-        this.end = end;
+        this.endTime = endTime;
     }
 
     public Long getId() {
@@ -41,11 +50,11 @@ public class CalendarEvent {
         this.start = start;
     }
 
-    public LocalDateTime getEnd() {
-        return end;
+    public LocalDateTime getEndTime() {
+        return endTime;
     }
 
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
+    public void setEndTime(LocalDateTime endTime) {
+        this.endTime = endTime;
     }
 }
