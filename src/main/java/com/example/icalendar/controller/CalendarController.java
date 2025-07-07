@@ -12,6 +12,7 @@ import net.fortuna.ical4j.model.property.Summary;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Version;
 import net.fortuna.ical4j.model.property.CalScale;
+import net.fortuna.ical4j.model.property.Uid;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -56,6 +57,7 @@ public class CalendarController {
 
         VEvent vEvent = new VEvent();
         vEvent.getProperties().add(new Summary(event.getSummary()));
+        vEvent.getProperties().add(new Uid(String.valueOf(event.getId())));
         DateTime start = new DateTime(java.util.Date
                 .from(event.getStart().atZone(java.time.ZoneId.systemDefault()).toInstant()));
         DateTime end = new DateTime(java.util.Date
