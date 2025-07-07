@@ -2,7 +2,9 @@ package com.example.icalendar.controller;
 
 import com.example.icalendar.model.CalendarEvent;
 import com.example.icalendar.service.CalendarService;
+import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
+import net.fortuna.ical4j.model.DateTime;
 import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.DtEnd;
 import net.fortuna.ical4j.model.property.DtStart;
@@ -51,14 +53,18 @@ public class CalendarController {
 
         VEvent vEvent = new VEvent();
         vEvent.getProperties().add(new Summary(event.getSummary()));
-        vEvent.getProperties().add(new DtStart(event.getStart()));
-        vEvent.getProperties().add(new DtEnd(event.getEndTime()));
+        DateTime start = new DateTime(java.util.Date
+                .from(event.getStart().atZone(java.time.ZoneId.systemDefault()).toInstant()));
+        DateTime end = new DateTime(java.util.Date
+                .from(event.getEndTime().atZone(java.time.ZoneId.systemDefault()).toInstant()));
+        vEvent.getProperties().add(new DtStart(start));
+        vEvent.getProperties().add(new DtEnd(end));
 
         Calendar calendar = new Calendar();
         calendar.getComponents().add(vEvent);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        calendar.write(out);
+        new CalendarOutputter().output(calendar, out);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(new MediaType("text", "calendar"));
