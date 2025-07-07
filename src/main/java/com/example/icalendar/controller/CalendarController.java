@@ -9,6 +9,9 @@ import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.DtEnd;
 import net.fortuna.ical4j.model.property.DtStart;
 import net.fortuna.ical4j.model.property.Summary;
+import net.fortuna.ical4j.model.property.ProdId;
+import net.fortuna.ical4j.model.property.Version;
+import net.fortuna.ical4j.model.property.CalScale;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -61,6 +64,9 @@ public class CalendarController {
         vEvent.getProperties().add(new DtEnd(end));
 
         Calendar calendar = new Calendar();
+        calendar.getProperties().add(new ProdId("-//iCalendar Example//EN"));
+        calendar.getProperties().add(Version.VERSION_2_0);
+        calendar.getProperties().add(CalScale.GREGORIAN);
         calendar.getComponents().add(vEvent);
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
